@@ -28,8 +28,16 @@ app.get("/", (req, res) => {
 });
 
 io.on("connection", (socket) => {
-  console.log("User connected");
-  console.log("ID", socket.id);
+  console.log("User connected", socket.id);
+
+  socket.on("message", (data) => {
+    console.log(data);
+    socket.broadcast.emit("receive-message", data);
+  });
+
+  socket.on("disconnect", () => {
+    console.log("User Disconnected", socket.id);
+  });
 });
 
 server.listen(port, () => {
