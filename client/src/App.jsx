@@ -10,7 +10,13 @@ import React, { useEffect, useMemo, useState } from "react";
 import { io } from "socket.io-client";
 
 const App = () => {
-  const socket = useMemo(() => io("http://localhost:3000"), []);
+  const socket = useMemo(
+    () =>
+      io("http://localhost:3000", {
+        withCredentials: true,
+      }),
+    []
+  );
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [room, setRoom] = useState("");
